@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package post.v1alpha;
+
+message Post {
+  int32 id= 1;
+  string title = 2;
+  string body = 3;
+  string user_id = 4;
+}
+
+service PostCRUDService {
+  rpc Get (GetRequest) returns (GetResponse);
+  rpc Add (AddRequest) returns (AddResponse);
+  rpc Update (UpdateRequest) returns (UpdateResponse);
+  rpc Delete (DeleteRequest) returns (DeleteResponse);
+}
+
+message GetRequest {
+  int32 id = 1;
+  string title = 2;
+  string body = 3;
+  string user_id = 4;
+
+  
+}
+
+message GetResponse {
+  repeated Post posts = 1;
+}
+
+message AddRequest {
+  string title = 1;
+  string body = 2;
+  string user_id = 3;
+  
+}
+
+message AddResponse {
+  Post post = 1;
+}
+
+message UpdateRequest{
+    int32 id = 1;
+    string title = 2;
+    string body = 3; 
+    string user_id = 4;
+ 
+}
+
+message UpdateResponse{
+    Post post = 1;
+   
+}
+
+message DeleteRequest{
+    int32 id = 1;
+    string user_id = 2;
+}
+
+message DeleteResponse{
+Post post = 1;
+}
