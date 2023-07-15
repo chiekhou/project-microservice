@@ -26,7 +26,7 @@ import { GRPCUser } from 'src/auth/user.decorator';
 
 @Controller()
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @GrpcMethod('UserService')
   async Register(req: RegisterRequest): Promise<RegisterResponse> {

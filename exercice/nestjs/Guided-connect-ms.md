@@ -143,7 +143,7 @@ From this client module registration, nestjs will link everything together. From
 
 Now that our user api is ready to be called, our hero can be assigned to a user :
 1. Modify the hero message in the proto to add a `user_id`
-2. Regenerate the stubs and update the proto
+2. Reg enerate the stubs and update the proto
 3. Add the user_id to the prisma schema
 4. Run a migration
 5. When a hero is created, check if the user exists. If not, throw an error. 

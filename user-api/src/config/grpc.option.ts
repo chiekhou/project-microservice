@@ -9,7 +9,22 @@ import { addReflectionToGrpcConfig } from 'nestjs-grpc-reflection';
 import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
 import { AUTH_V1ALPHA_PACKAGE_NAME } from 'src/stubs/auth/v1alpha/service';
-import { USER_V1ALPHA_PACKAGE_NAME } from 'src/stubs/user/v1alpha/service';
+import { USER_V1ALPHA_PACKAGE_NAME, USER_SERVICE_NAME } from 'src/stubs/user/v1alpha/service';
+
+export const userGrpcOptions: ClientProviderOptions = {
+  name: USER_SERVICE_NAME,
+  transport: Transport.GRPC,
+  options: {
+    url: '0.0.0.0:4000',
+    package: USER_V1ALPHA_PACKAGE_NAME,
+    loader: {
+      includeDirs: [join(__dirname, '../proto')],
+    },
+    protoPath: [join(__dirname, '../proto/user/v1alpha/service.proto')],
+    credentials: ChannelCredentials.createInsecure(),
+  },
+};
+
 
 export default (cs: ConfigService) =>
   addReflectionToGrpcConfig({
@@ -19,11 +34,11 @@ export default (cs: ConfigService) =>
       url: `0.0.0.0:${cs.get('PORT') || 4002}`,
       credentials: !cs.get<boolean>('insecure')
         ? ServerCredentials.createSsl(null, [
-            {
-              private_key: readFileSync(cs.get('USER_KEY')),
-              cert_chain: readFileSync(cs.get('USER_CERT')),
-            },
-          ])
+          {
+            private_key: readFileSync(cs.get('USER_KEY')),
+            cert_chain: readFileSync(cs.get('USER_CERT')),
+          },
+        ])
         : ServerCredentials.createInsecure(),
       loader: {
         includeDirs: [join(__dirname, '../proto')],
@@ -53,10 +68,10 @@ export const authGrpcOptions = (cs: ConfigService): ClientProviderOptions => {
       },
       credentials: !cs.get<boolean>('insecure')
         ? ChannelCredentials.createSsl(
-            readFileSync(cs.get('ROOT_CA')),
-            readFileSync(cs.get('USER_KEY')),
-            readFileSync(cs.get('USER_CERT')),
-          )
+          readFileSync(cs.get('ROOT_CA')),
+          readFileSync(cs.get('USER_KEY')),
+          readFileSync(cs.get('USER_CERT')),
+        )
         : ChannelCredentials.createInsecure(),
     },
   };

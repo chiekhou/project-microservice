@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package post.v1alpha;
+
+import "post/v1alpha/message.proto";
+
+option go_package = "stubs";
+
+service PostCRUDService {
+    rpc Get (GetRequest) returns (GetResponse);
+    rpc Add (AddRequest) returns (AddResponse);
+    rpc Update (UpdateRequest) returns (UpdateResponse);
+    rpc Delete (DeleteRequest) returns (DeleteResponse);
+  }
