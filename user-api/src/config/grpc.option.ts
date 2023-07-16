@@ -52,6 +52,7 @@ export const authGrpcOptions = (cs: ConfigService): ClientProviderOptions => {
     name: AUTH_V1ALPHA_PACKAGE_NAME,
     transport: Transport.GRPC,
     options: {
+
       url: cs.get('AUTH_API_URL'),
       package: AUTH_V1ALPHA_PACKAGE_NAME,
       loader: {
