@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package commentaire.v1alpha;
+
+message Commentaire {
+  string name = 1;
+  int32 id = 2;
+  int32 power = 3;
+  int32 hp = 4;
+}
+
+service CommentaireCRUDService {
+  rpc Get (GetRequest) returns (GetResponse);
+  rpc Add (AddRequest) returns (AddResponse);
+  rpc Update (UpdateRequest) returns (UpdateResponse);
+  rpc Delete (DeleteRequest) returns (DeleteResponse);
+}
+
+message GetRequest {
+  string name = 1;
+  int32 id = 2;
+}
+
+message GetResponse {
+  repeated Commentaire heroes = 1;
+}
+
+message AddRequest {
+  string name = 1;
+  int32 power = 2;
+}
+
+message AddResponse {
+  Commentaire commentaire = 1;
+}
+
+message UpdateRequest {
+    int32 id = 1;
+    string name = 2;
+    int32 power = 3;
+    int32 hp = 4;
+}
+  
+message UpdateResponse {
+    Commentaire commentaire = 1;
+}
+
+message DeleteRequest {
+    int32 id = 1;
+}
+
+message DeleteResponse {
+    bool success = 1;
+}
